@@ -1,6 +1,21 @@
 import rclpy
 from rclpy.node import Node
-from std_msgs.msg import Float64MultiArray
+from sensor_msgs.msg import JointState
+
+#Helper Methods 
+def log_warning(msg):
+    try:
+        import carb
+        carb.log_warn(msg)
+    except ImportError:
+        print(f"WARNING: {msg}")
+
+def log_error(msg):
+    try:
+        import carb
+        carb.log_error(msg)
+    except ImportError:
+        print(f"ERROR: {msg}")
 
 # Constants
 NAMESPACE = ''  # Namespace, if any (empty string means no namespace)
@@ -24,7 +39,7 @@ class JointCommandPublisher(Node):
     def __init__(self):
         super().__init__('joint_command_publisher', namespace=NAMESPACE)
         self.publisher_ = self.create_publisher(
-            Float64MultiArray,
+            JointState,
             TOPIC,
             10  # Queue size
         )
@@ -41,11 +56,12 @@ class JointCommandPublisher(Node):
             self.position_index = 0  # Reset to the first position set
 
         # Create the message
-        message = Float64MultiArray()
-        message.data = POSITIONS[self.position_index]
+        message = JointState()
+        message.name = JOINT_NAMES
+        message.position = POSITIONS[self.position_index]
 
         # Log and publish the message
-        self.get_logger().info(f'Publishing joint positions: {message.data}')
+        self.get_logger().info(f'Publishing joint positions: {message.position}')
         self.publisher_.publish(message)
 
         # Increment the position index
@@ -55,35 +71,37 @@ def main(args=None):
 
     # Set the domain ID
     import os
-    # Check for SimulatorApp instance (Isaac Sim)
-    if 'OMNI_APP' in os.environ:
-        print("The script is running inside Isaac Sim. (OMNI_APP set)")
-    else:
-        print("The script is not running inside Isaac Sim. (OMNI_APP not set)")
     try:
-        from omni.isaac.kit import SimulatorApp
-        if SimulatorApp._instance is not None:
-            print("Detected SimulatorApp instance. Exiting ROS 2 publisher script.")
-            return
+        import omni.kit.app
+        try:
+            app = omni.kit.app.get_app()
+            if app is not None:
+                log_error("Detected SimulatorApp instance. Exiting ROS 2 publisher script. (Do not run script from within App)")
+                return
+        except RuntimeError:
+            # This happens if the Kit app is not running (e.g., in python.sh)
+            pass
     except ImportError:
-        print("Warning: omni.isaac.kit not found. No Omniverse-related libraries available.")
+        log_warning("omni.isaac.kit not found. No Omniverse-related libraries available.")
     
     os.environ['ROS_DOMAIN_ID'] = str(DOMAIN_ID)
 
     # Initialize the ROS 2 Python client library
-    #rclpy.init(args=args)
+    rclpy.init(args=args)
 
     # Create and spin the node
     joint_command_publisher = JointCommandPublisher()
     try:
-        #rclpy.spin(joint_command_publisher)
+        rclpy.spin(joint_command_publisher)
         pass
     except KeyboardInterrupt:
-        pass  # Allow clean shutdown on Ctrl+C
+        # Allow clean shutdown on Ctrl+C
+        print("KeyboardInterrupt received. Shutting down...")
     finally:
         # Destroy the node and shut down ROS
         joint_command_publisher.destroy_node()
-        #rclpy.shutdown()
+        if rclpy.ok():
+            rclpy.shutdown()
 
 if __name__ == '__main__':
     main()
