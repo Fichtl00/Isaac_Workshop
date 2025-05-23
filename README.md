@@ -1,3 +1,5 @@
+⚠️ **Work in Progress:** This workshop material is under active development and may change frequently.
+
 # Isaac Workshop
 
 Welcome to the **Isaac Workshop** repository!
