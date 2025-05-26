@@ -21,14 +21,30 @@ def log_error(msg):
 NAMESPACE = ''  # Namespace, if any (empty string means no namespace)
 DOMAIN_ID = 0  # Domain ID for ROS 2 communication
 TOPIC = '/joint_command'  # Topic to send joint commands
+DELAY = 1.5  # Delay in seconds between messages
 
 
-# Joint names and positions
-JOINT_NAMES = ['joint_1', 'joint_2', 'joint_3', 'joint_4', 'joint_5', 'joint_6']
+# Joint names and positions (gripper 0..closed, 1..open)
+JOINT_NAMES = ['joint_1', 'joint_2', 'joint_3', 'joint_4', 'joint_5', 'joint_6', 'gripper_state'] 
 POSITIONS = [  # Array of arrays specifying positions for the robot
-    [0.0, 0.5, 1.0, 1.5, 2.0, 2.5],  # Position set 1
-    [-0.5, -1.0, -1.5, -2.0, -2.5, -3.0],  # Position set 2
-    [1.0, 0.0, -1.0, 1.0, 0.0, -1.0]  # Position set 3
+    [0.68, -1.41, 1.66, 0.0, 1.20, 0.0, 1.0],  # Hover over right container
+    [0.59, -0.93, 1.58, 0.0, 0.913, 3.73, 1.0],  # Target Red cube
+    [0.59, -0.93, 1.58, 0.0, 0.913, 3.73, 0.0],  # Attach Red cube
+    [0.68, -1.41, 1.66, 0.0, 1.20, 0.0, 0.0],  # Hover over right container
+    [-0.45, -1.41, 1.66, 0.0, 1.20, 0.0, 0.0],  # Hover over left container
+    [-0.45, -1.41, 1.66, 0.0, 1.20, 0.0, 1.0],  # Drop over left container
+    [0.68, -1.41, 1.66, 0.0, 1.20, 0.0, 1.0],  # Hover over right container
+    [0.70, -1.20, 1.84, 0.0, 0.80, -2.44, 1.0],  # Target Blue cube
+    [0.70, -1.20, 1.84, 0.0, 0.80, -2.44, 0.0],  # Attach Blue cube
+    [0.68, -1.41, 1.66, 0.0, 1.20, 0.0, 0.0],  # Hover over right container
+    [-0.45, -1.41, 1.66, 0.0, 1.20, 0.0, 0.0],  # Hover over left container
+    [-0.45, -1.41, 1.66, 0.0, 1.20, 0.0, 1.0],  # Drop over left container
+    [0.68, -1.41, 1.66, 0.0, 1.20, 0.0, 1.0],  # Hover over right container
+    [0.87, -1.35, 2.06, 0.0, 0.70, -2.27, 1.0],  # Target Green cube
+    [0.87, -1.35, 2.06, 0.0, 0.70, -2.27, 0.0],  # Attach Green cube
+    [0.68, -1.41, 1.66, 0.0, 1.20, 0.0, 0.0],  # Hover over right container
+    [-0.45, -1.41, 1.66, 0.0, 1.20, 0.0, 0.0],  # Hover over left container
+    [-0.45, -1.41, 1.66, 0.0, 1.20, 0.0, 1.0],  # Drop over left container
 ]
 
 class JointCommandPublisher(Node):
@@ -43,7 +59,7 @@ class JointCommandPublisher(Node):
             TOPIC,
             10  # Queue size
         )
-        self.timer = self.create_timer(5.0, self.publish_joint_commands)  # Timer to publish every 5 seconds
+        self.timer = self.create_timer(DELAY, self.publish_joint_commands)  # Timer to publish every 5 seconds
         self.position_index = 0  # Tracks the current position set to publish
 
         self.get_logger().info(f'Initialized JointCommandPublisher node in namespace: {NAMESPACE}')
@@ -96,7 +112,7 @@ def main(args=None):
         pass
     except KeyboardInterrupt:
         # Allow clean shutdown on Ctrl+C
-        print("KeyboardInterrupt received. Shutting down...")
+        joint_command_publisher.get_logger.info("KeyboardInterrupt received. Shutting down...")
     finally:
         # Destroy the node and shut down ROS
         joint_command_publisher.destroy_node()
