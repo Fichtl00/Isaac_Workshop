@@ -27,25 +27,35 @@ DELAY = 1.5  # Delay in seconds between messages
 # Joint names and positions (gripper 0..closed, 1..open)
 JOINT_NAMES = ['joint_1', 'joint_2', 'joint_3', 'joint_4', 'joint_5', 'joint_6', 'gripper_state'] 
 POSITIONS = [  # Array of arrays specifying positions for the robot
-    [0.68, -1.41, 1.66, 0.0, 1.20, 0.0, 1.0],  # Hover over right container
-    [0.59, -0.93, 1.58, 0.0, 0.913, 3.73, 1.0],  # Target Red cube
-    [0.59, -0.93, 1.58, 0.0, 0.913, 3.73, 0.0],  # Attach Red cube
-    [0.68, -1.41, 1.66, 0.0, 1.20, 0.0, 0.0],  # Hover over right container
-    [-0.45, -1.41, 1.66, 0.0, 1.20, 0.0, 0.0],  # Hover over left container
-    [-0.45, -1.41, 1.66, 0.0, 1.20, 0.0, 1.0],  # Drop over left container
-    [0.68, -1.41, 1.66, 0.0, 1.20, 0.0, 1.0],  # Hover over right container
-    [0.70, -1.20, 1.84, 0.0, 0.80, -2.44, 1.0],  # Target Blue cube
-    [0.70, -1.20, 1.84, 0.0, 0.80, -2.44, 0.0],  # Attach Blue cube
-    [0.68, -1.41, 1.66, 0.0, 1.20, 0.0, 0.0],  # Hover over right container
-    [-0.45, -1.41, 1.66, 0.0, 1.20, 0.0, 0.0],  # Hover over left container
-    [-0.45, -1.41, 1.66, 0.0, 1.20, 0.0, 1.0],  # Drop over left container
-    [0.68, -1.41, 1.66, 0.0, 1.20, 0.0, 1.0],  # Hover over right container
-    [0.87, -1.35, 2.06, 0.0, 0.70, -2.27, 1.0],  # Target Green cube
-    [0.87, -1.35, 2.06, 0.0, 0.70, -2.27, 0.0],  # Attach Green cube
-    [0.68, -1.41, 1.66, 0.0, 1.20, 0.0, 0.0],  # Hover over right container
-    [-0.45, -1.41, 1.66, 0.0, 1.20, 0.0, 0.0],  # Hover over left container
-    [-0.45, -1.41, 1.66, 0.0, 1.20, 0.0, 1.0],  # Drop over left container
+    [0.68, -1.36, 1.75, 0.0, 1.19, 0.0, 1.0],  # Hover over right container
+    [0.59, -0.93, 1.56, 0.0, 0.939, 0.0, 1.0],  # Target Red cube
+    [0.59, -0.93, 1.56, 0.0, 0.939, 0.0, 0.0],  # Attach Red cube
+    [0.68, -1.36, 1.75, 0.0, 1.19, 0.0, 0.0],  # Hover over right container
+    [-0.52, -1.36, 1.75, 0.0, 1.19, 0.0, 0.0],  # Hover over left container
+    [-0.52, -1.16, 1.92, 0.0, 0.79, 0.0, 0.0],  # Lower Red cube
+    [-0.52, -1.16, 1.92, 0.0, 0.79, 0.0, 1.0],  # Drop Red cube
+    [-0.52, -1.36, 1.75, 0.0, 1.19, 0.0, 1.0],  # Hover over left container
+    [0.68, -1.36, 1.75, 0.0, 1.19, 0.0, 1.0],  # Hover over right container
+    [0.70, -1.08, 1.82, 0.0, 0.83, 0.0, 1.0],  # Target Blue cube
+    [0.70, -1.08, 1.82, 0.0, 0.83, 0.0, 0.0],  # Attach Blue cube
+    [0.68, -1.36, 1.75, 0.0, 1.19, 0.0, 0.0],  # Hover over right container
+    [-0.52, -1.36, 1.75, 0.0, 1.19, 0.0, 0.0],  # Hover over left container
+    [-0.52, -1.23, 1.88, 0.0, 0.91, 0.0, 0.0],  # Lower Blue cube
+    [-0.52, -1.23, 1.88, 0.0, 0.91, 0.0, 1.0],  # Drop Blue cube
+    [-0.52, -1.36, 1.75, 0.0, 1.19, 0.0, 1.0],  # Hover over left container
+    [0.68, -1.36, 1.75, 0.0, 1.19, 0.0, 1.0],  # Hover over right container
+    [0.879, -1.22, 2.04, 0.0, 0.748, 0.0, 1.0],  # Target Green cube
+    [0.879, -1.22, 2.04, 0.0, 0.748, 0.0, 0.0],  # Attach Green cube
+    [0.68, -1.36, 1.75, 0.0, 1.19, 0.0, 0.0],  # Hover over right container
+    [-0.52, -1.36, 1.75, 0.0, 1.19, 0.0, 0.0],  # Hover over left container
+    [-0.52, -1.28, 1.85, 0.0, 0.99, 0.0, 0.0],  # Lower Green cube
+    [-0.52, -1.28, 1.85, 0.0, 0.99, 0.0, 1.0],  # Drop Green cube
+    [-0.52, -1.36, 1.75, 0.0, 1.19, 0.0, 1.0],  # Hover over left container
 ]
+
+    #[-0.52, -1.16, 1.92, 0.0, 0.81, 0.0, 0.0],  # Lower Red cube
+    #[-0.52, -1.23, 1.88, 0.0, 0.91, 0.0, 0.0],  # Lower Blue cube
+    #[-0.52, -1.28, 1.85, 0.0, 0.99, 0.0, 0.0],  # Lower Green cube
 
 class JointCommandPublisher(Node):
     """
