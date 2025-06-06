@@ -4,6 +4,10 @@
 
 Welcome to the **Isaac Workshop** repository!
 
+## Requirements
+- [Isaac Sim 4.5](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/download.html)
+- [VS Code](https://code.visualstudio.com/)
+
 ## Overview
 
 This repository contains materials and code for a 2x4h hands-on workshop. The workshop covers key concepts and practical exercises related to NVIDIA Isaac technologies.
