@@ -1,0 +1,172 @@
+format: "xrdf"
+
+format_version: 1.0
+
+default_joint_positions: 
+  joint_1: -0.0
+  joint_2: 0.0003
+  joint_3: 1e-04
+  joint_4: 0.0
+  joint_5: 0.0
+  joint_6: 0.0
+  finger_joint: -0.0
+  left_inner_knuckle_joint: -0.0
+  right_inner_knuckle_joint: -0.0
+  right_outer_knuckle_joint: 0.0
+  left_inner_finger_joint: 0.0
+  right_inner_finger_joint: 0.0
+
+cspace: 
+  joint_names: 
+    - "joint_1"
+    - "joint_2"
+    - "joint_3"
+    - "joint_4"
+    - "joint_5"
+    - "joint_6"
+  acceleration_limits: [10, 10, 10, 10, 10, 10]
+  jerk_limits: [10000, 10000, 10000, 10000, 10000, 10000]
+
+collision: 
+  geometry: "auto_generated_collision_sphere_group"
+
+self_collision: 
+  geometry: "auto_generated_collision_sphere_group"
+  ignore: 
+    world: 
+      - "link_1"
+    link_1: 
+      - "link_2"
+    link_2: 
+      - "link_3"
+    link_3: 
+      - "link_4"
+    link_4: 
+      - "link_5"
+    link_5: 
+      - "link_6"
+    robotiq_arg2f_base_link: 
+      - "left_outer_knuckle"
+      - "left_inner_knuckle"
+      - "right_inner_knuckle"
+      - "right_outer_knuckle"
+    left_outer_knuckle: 
+      - "left_inner_finger"
+      - "left_inner_knuckle"
+      - "right_inner_knuckle"
+      - "right_outer_knuckle"
+    right_outer_knuckle: 
+      - "right_inner_finger"
+    link_6: 
+      - "robotiq_arg2f_base_link"
+    left_inner_knuckle: 
+      - "right_inner_knuckle"
+      - "right_outer_knuckle"
+    right_inner_knuckle: 
+      - "right_outer_knuckle"
+
+geometry: 
+  auto_generated_collision_sphere_group: 
+    spheres: 
+      link_1: 
+        - center: [0.003, 0.006, -0.085]
+          radius: 0.12
+      world: 
+        - center: [-0.002, -0.001, 0.015]
+          radius: 0.14
+        - center: [-0.009, -0.003, 0.134]
+          radius: 0.12
+        - center: [-0.145, -0.006, 0.097]
+          radius: 0.0914
+      link_2: 
+        - center: [0.003, 0.002, -0.041]
+          radius: 0.11
+        - center: [0.483, -0.001, -0.076]
+          radius: 0.1
+        - center: [0.138, 0.003, -0.059]
+          radius: 0.1
+        - center: [0.254, 0.003, -0.066]
+          radius: 0.1
+        - center: [0.369, 0.001, -0.074]
+          radius: 0.1
+        - center: [0.58, 0.003, -0.072]
+          radius: 0.1
+      link_3: 
+        - center: [0.028, -0.001, 0.042]
+          radius: 0.11
+      link_4: 
+        - center: [-0.005, 0.037, -0.095]
+          radius: 0.11
+        - center: [-0.0, 0.08, -0.315]
+          radius: 0.0752
+        - center: [-0.006, 0.078, -0.379]
+          radius: 0.07
+        - center: [-0.0, 0.07, -0.226]
+          radius: 0.085
+        - center: [-0.002, 0.091, -0.428]
+          radius: 0.06
+      link_5: 
+        - center: [0.005, -0.0, -0.037]
+          radius: 0.0804
+        - center: [0.052, -0.001, -0.05]
+          radius: 0.0731
+      link_6: 
+        - center: [-0.002, 0.005, -0.045]
+          radius: 0.075
+        - center: [0.013, 0.079, -0.058]
+          radius: 0.04
+        - center: [-0.013, 0.08, -0.058]
+          radius: 0.04
+      ee_link/robotiq_arg2f_base_link: 
+        - center: [0.001, 0.001, 0.043]
+          radius: 0.05
+      ee_link/left_outer_knuckle: 
+        - center: [-0.0, 0.018, 0.019]
+          radius: 0.0193
+        - center: [-0.001, 0.046, 0.014]
+          radius: 0.0193
+        - center: [-0.0, 0.071, 0.008]
+          radius: 0.0175
+        - center: [-0.0, 0.095, 0.001]
+          radius: 0.0158
+      ee_link/left_inner_finger: 
+        - center: [-0.0, 0.009, -0.009]
+          radius: 0.0174
+        - center: [0.0, 0.029, -0.021]
+          radius: 0.0165
+        - center: [0.0, 0.046, -0.024]
+          radius: 0.0165
+        - center: [0.0, 0.069, -0.022]
+          radius: 0.0174
+      ee_link/left_inner_knuckle: 
+        - center: [0.001, 0.039, 0.003]
+          radius: 0.0156
+        - center: [0.001, 0.06, 0.0]
+          radius: 0.0156
+        - center: [0.001, 0.082, -0.002]
+          radius: 0.0156
+      ee_link/right_inner_knuckle: 
+        - center: [-0.0, 0.036, 0.002]
+          radius: 0.0156
+        - center: [-0.001, 0.082, 0.001]
+          radius: 0.0156
+        - center: [0.0, 0.061, -0.002]
+          radius: 0.0156
+      ee_link/right_outer_knuckle: 
+        - center: [0.001, 0.023, 0.018]
+          radius: 0.0152
+        - center: [-0.0, 0.05, 0.011]
+          radius: 0.0152
+        - center: [-0.0, 0.074, 0.005]
+          radius: 0.0146
+        - center: [-0.0, 0.095, -0.001]
+          radius: 0.014
+      ee_link/right_inner_finger: 
+        - center: [0.001, 0.02, -0.021]
+          radius: 0.0165
+        - center: [-0.001, 0.009, -0.007]
+          radius: 0.0156
+        - center: [0.001, 0.044, -0.023]
+          radius: 0.0156
+        - center: [0.001, 0.069, -0.025]
+          radius: 0.0147

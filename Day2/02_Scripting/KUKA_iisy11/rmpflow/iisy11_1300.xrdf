@@ -1,0 +1,95 @@
+format: "xrdf"
+
+format_version: 1.0
+
+default_joint_positions: 
+  joint_1: -0.0
+  joint_2: 0.0003
+  joint_3: 1e-04
+  joint_4: 0.0
+  joint_5: 0.0
+  joint_6: 0.0
+
+cspace: 
+  joint_names: 
+    - "joint_1"
+    - "joint_2"
+    - "joint_3"
+    - "joint_4"
+    - "joint_5"
+    - "joint_6"
+  acceleration_limits: [10, 10, 10, 10, 10, 10]
+  jerk_limits: [10000, 10000, 10000, 10000, 10000, 10000]
+
+collision: 
+  geometry: "auto_generated_collision_sphere_group"
+
+self_collision: 
+  geometry: "auto_generated_collision_sphere_group"
+  ignore: 
+    world: 
+      - "link_1"
+    link_1: 
+      - "link_2"
+    link_2: 
+      - "link_3"
+    link_3: 
+      - "link_4"
+    link_4: 
+      - "link_5"
+    link_5: 
+      - "link_6"
+
+geometry: 
+  auto_generated_collision_sphere_group: 
+    spheres: 
+      link_1: 
+        - center: [0.003, 0.006, -0.085]
+          radius: 0.12
+      world: 
+        - center: [-0.002, -0.001, 0.015]
+          radius: 0.14
+        - center: [-0.009, -0.003, 0.134]
+          radius: 0.12
+        - center: [-0.145, -0.006, 0.097]
+          radius: 0.0914
+      link_2: 
+        - center: [0.003, 0.002, -0.041]
+          radius: 0.11
+        - center: [0.483, -0.001, -0.076]
+          radius: 0.1
+        - center: [0.138, 0.003, -0.059]
+          radius: 0.1
+        - center: [0.254, 0.003, -0.066]
+          radius: 0.1
+        - center: [0.369, 0.001, -0.074]
+          radius: 0.1
+        - center: [0.58, 0.003, -0.072]
+          radius: 0.1
+      link_3: 
+        - center: [0.028, -0.001, 0.042]
+          radius: 0.11
+      link_4: 
+        - center: [-0.005, 0.037, -0.095]
+          radius: 0.11
+        - center: [-0.0, 0.08, -0.315]
+          radius: 0.0752
+        - center: [-0.006, 0.078, -0.379]
+          radius: 0.07
+        - center: [-0.0, 0.07, -0.226]
+          radius: 0.085
+        - center: [-0.002, 0.091, -0.428]
+          radius: 0.06
+      link_5: 
+        - center: [0.005, -0.0, -0.037]
+          radius: 0.0804
+        - center: [0.052, -0.001, -0.05]
+          radius: 0.0731
+      link_6: 
+        - center: [-0.002, 0.005, -0.045]
+          radius: 0.075
+        - center: [0.013, 0.079, -0.058]
+          radius: 0.04
+        - center: [-0.013, 0.08, -0.058]
+          radius: 0.04
+      
