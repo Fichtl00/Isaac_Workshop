@@ -14,21 +14,6 @@
 # limitations under the License.
 # Based on the original script by NVIDIA Corporation, modified for educational purposes.
 
-import os
-try:
-    import omni.kit.app
-    try:
-        app = omni.kit.app.get_app()
-        if app is not None:
-            print("Detected SimulatorApp instance. Exiting application script.\n(Do not run script from within App)")
-            exit(1)
-    except RuntimeError:
-        # This happens if the Kit app is not running (e.g., in python.sh)
-        pass
-except ImportError:
-    print("omni.isaac.kit not found. No Omniverse-related libraries available.\n(Ensure you are running this script in the correct environment.)")
-    exit(1)
-
 from isaacsim import SimulationApp
 
 simulation_app = SimulationApp({"headless": False})
