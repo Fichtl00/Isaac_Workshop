@@ -35,6 +35,6 @@ class PickPlaceController(manipulators_controllers.PickPlaceController):
             ),
             gripper=gripper,
             events_dt=events_dt,
-            end_effector_initial_height=0.6,
+            end_effector_initial_height=0.8,
         )
         return

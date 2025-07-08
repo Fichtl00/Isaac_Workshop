@@ -54,7 +54,7 @@ class PickPlace(tasks.PickPlace):
             end_effector_prim_path="/lbr_iisy11_r1300/ee_link/robotiq_arg2f_base_link",
             joint_prim_names=["finger_joint", "right_outer_knuckle_joint"],
             joint_opened_positions=np.array([0,-0.84]),
-            joint_closed_positions=np.array([0.5,-0.3]),
+            joint_closed_positions=np.array([0.45,-0.3]),
             action_deltas=np.array([-0.4,0.3]),
             #use_mimic_joints=True,
         )

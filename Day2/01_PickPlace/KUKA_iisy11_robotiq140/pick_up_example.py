@@ -38,10 +38,10 @@ scene_path = os.path.join(os.path.dirname(__file__), "../Scene/Pick_Place_Scene.
 add_reference_to_stage(usd_path=scene_path, prim_path="/Environment")
 
 
-
-target_position = np.array([-0.3, 0.6, 0])
-target_position[2] = 0.075
-my_task = PickPlace(name="iisy11_pick_place", target_position=target_position)
+cube_initial_position = np.array([0.35, 0.15, 0.0385])
+target_position = np.array([0.35, -0.3, 0.0385])
+target_position[2] = 0.055  # Adjust the Z position to be above the cube (Sot the Gripper wont crash into the table)
+my_task = PickPlace(name="iisy11_pick_place", target_position=target_position, cube_initial_position=cube_initial_position)
 
 my_world.add_task(my_task)
 my_world.reset()
