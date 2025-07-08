@@ -21,7 +21,7 @@ This repository contains materials and code for a 2x4h hands-on workshop. The wo
 
 1. Clone this repository:
     ```bash
-    git clone https://github.com/yourusername/isaac-workshop.git
+    git clone https://github.com/Fichtl00/isaac-workshop.git
     ```
 2. Follow the Workshop
 
