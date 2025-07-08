@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: Copyright (c) 2021-2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) 2025 Institute for Production and Informatics, Kempten University.
 # SPDX-License-Identifier: Apache-2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,9 +12,26 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+# Based on the original script by NVIDIA Corporation, modified for educational purposes.
+
 from typing import Optional, Sequence
 
-import omni.kit.app
+
+import os
+try:
+    import omni.kit.app
+    try:
+        app = omni.kit.app.get_app()
+        if app is not None:
+            print("Detected SimulatorApp instance. Exiting application script.\n(Do not run script from within App)")
+            exit(1)
+    except RuntimeError:
+        # This happens if the Kit app is not running (e.g., in python.sh)
+        pass
+except ImportError:
+    print("omni.isaac.kit not found. No Omniverse-related libraries available.\n(Ensure you are running this script in the correct environment.)")
+    exit(1)
+
 from isaacsim.core.prims import SingleArticulation, SingleRigidPrim
 from isaacsim.robot.manipulators.grippers.gripper import Gripper
 from isaacsim.robot.manipulators.grippers.parallel_gripper import ParallelGripper
