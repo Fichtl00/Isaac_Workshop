@@ -13,12 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # Based on the original script by NVIDIA Corporation, modified for educational purposes.
-
 from typing import Optional, Sequence
 
-
-
-
+import omni.kit.app
 from isaacsim.core.prims import SingleArticulation, SingleRigidPrim
 from isaacsim.robot.manipulators.grippers.gripper import Gripper
 from isaacsim.robot.manipulators.grippers.parallel_gripper import ParallelGripper

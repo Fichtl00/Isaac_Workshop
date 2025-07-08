@@ -19,10 +19,12 @@ from isaacsim import SimulationApp
 simulation_app = SimulationApp({"headless": False})
 
 import argparse
-
 import numpy as np
+import os
+
 from controllers.pick_place import PickPlaceController
 from isaacsim.core.api import World
+from isaacsim.core.utils.stage import add_reference_to_stage
 from tasks.pick_place import PickPlace
 
 parser = argparse.ArgumentParser()
@@ -31,9 +33,14 @@ args, unknown = parser.parse_known_args()
 
 my_world = World(stage_units_in_meters=1.0)
 
+# Add the Pick Place Scene to the environment
+scene_path = os.path.join(os.path.dirname(__file__), "../Scene/Pick_Place_Scene.usd")
+add_reference_to_stage(usd_path=scene_path, prim_path="/Environment")
+
+
 
 target_position = np.array([-0.3, 0.6, 0])
-target_position[2] = 0.1 / 2.0
+target_position[2] = 0.075
 my_task = PickPlace(name="iisy11_pick_place", target_position=target_position)
 
 my_world.add_task(my_task)

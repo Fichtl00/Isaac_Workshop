@@ -22,7 +22,7 @@ import numpy as np
 from isaacsim.core.utils.stage import add_reference_to_stage
 from isaacsim.robot.manipulators import SingleManipulator
 from isaacsim.robot.manipulators.grippers import ParallelGripper
-from isaacsim.storage.native import get_assets_root_path
+from omni.usd import get_context
 
 
 # Inheriting from the base class Follow Target
@@ -65,4 +65,13 @@ class FollowTarget(tasks.FollowTarget):
             end_effector_prim_path="/lbr_iisy11_r1300/ee_link/robotiq_arg2f_base_link",
             gripper=gripper,
         )
+        
+        # Hide the ground plane created by tasks.FollowTarget
+        stage = get_context().get_stage()
+        ground_plane_prim = stage.GetPrimAtPath("/World/defaultGroundPlane")
+        if ground_plane_prim.IsValid():
+            from pxr import UsdGeom
+            imageable = UsdGeom.Imageable(ground_plane_prim)
+            imageable.MakeInvisible()
+
         return manipulator

@@ -22,6 +22,7 @@ import numpy as np
 from isaacsim.core.utils.stage import add_reference_to_stage
 from isaacsim.robot.manipulators import SingleManipulator
 from isaacsim.robot.manipulators.grippers import ParallelGripper
+from omni.usd import get_context
 
 
 class PickPlace(tasks.PickPlace):
@@ -53,8 +54,8 @@ class PickPlace(tasks.PickPlace):
             end_effector_prim_path="/lbr_iisy11_r1300/ee_link/robotiq_arg2f_base_link",
             joint_prim_names=["finger_joint", "right_outer_knuckle_joint"],
             joint_opened_positions=np.array([0,-0.84]),
-            joint_closed_positions=np.array([0.8,-0.2]),
-            action_deltas=np.array([-0.6,0.2]),
+            joint_closed_positions=np.array([0.5,-0.3]),
+            action_deltas=np.array([-0.4,0.3]),
             #use_mimic_joints=True,
         )
         # define the manipulator
@@ -68,4 +69,13 @@ class PickPlace(tasks.PickPlace):
         joints_default_positions[7] = 0.628
         joints_default_positions[8] = 0.628
         manipulator.set_joints_default_state(positions=joints_default_positions)
+        
+        # Hide the ground plane created by tasks.FollowTarget
+        stage = get_context().get_stage()
+        ground_plane_prim = stage.GetPrimAtPath("/World/defaultGroundPlane")
+        if ground_plane_prim.IsValid():
+            from pxr import UsdGeom
+            imageable = UsdGeom.Imageable(ground_plane_prim)
+            imageable.MakeInvisible()
+
         return manipulator

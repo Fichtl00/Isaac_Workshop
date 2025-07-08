@@ -33,6 +33,11 @@ parser.add_argument("--test", default=False, action="store_true", help="Run in t
 args, unknown = parser.parse_known_args()
 
 my_world = World(stage_units_in_meters=1.0)
+
+# Add the Pick Place Scene to the environment
+scene_path = os.path.join(os.path.dirname(__file__), "../Scene/Pick_Place_Scene.usd")
+add_reference_to_stage(usd_path=scene_path, prim_path="/Environment")
+
 asset_path = os.path.join(os.path.dirname(__file__), "iisy11_1300_Robotiq_2f_140.usd")
 add_reference_to_stage(usd_path=asset_path, prim_path="/lbr_iisy11_r1300")
 # define the gripper
@@ -55,7 +60,7 @@ my_iisy11 = my_world.scene.add(
     )
 )
 
-my_world.scene.add_default_ground_plane()
+#my_world.scene.add_default_ground_plane()
 my_world.reset()
 
 i = 0

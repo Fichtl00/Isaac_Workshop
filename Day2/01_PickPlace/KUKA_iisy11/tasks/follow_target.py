@@ -20,6 +20,7 @@ from typing import Optional
 import isaacsim.core.api.tasks as tasks
 import numpy as np
 from isaacsim.core.utils.stage import add_reference_to_stage
+from omni.usd import get_context
 from single_manipulator_fixed import SingleManipulatorFixed as SingleManipulator
 
 
@@ -53,4 +54,12 @@ class FollowTarget(tasks.FollowTarget):
             name="lbr_iisy11_r1300",
             end_effector_prim_path="/lbr_iisy11_r1300/link_6/tool0",
         )
+        
+        # Hide the ground plane created by tasks.FollowTarget
+        stage = get_context().get_stage()
+        ground_plane_prim = stage.GetPrimAtPath("/World/defaultGroundPlane")
+        if ground_plane_prim.IsValid():
+            from pxr import UsdGeom
+            imageable = UsdGeom.Imageable(ground_plane_prim)
+            imageable.MakeInvisible()
         return manipulator

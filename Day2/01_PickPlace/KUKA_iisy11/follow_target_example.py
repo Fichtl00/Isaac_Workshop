@@ -19,8 +19,11 @@ from isaacsim import SimulationApp
 simulation_app = SimulationApp({"headless": False})
 
 import numpy as np
+import os
+
 from controllers.ik_solver import KinematicsSolver
 from isaacsim.core.api import World
+from isaacsim.core.utils.stage import add_reference_to_stage
 from tasks.follow_target import FollowTarget
 
 #parser = argparse.ArgumentParser()
@@ -28,6 +31,11 @@ from tasks.follow_target import FollowTarget
 #args, unknown = parser.parse_known_args()
 
 my_world = World(stage_units_in_meters=1.0)
+
+# Add the Pick Place Scene to the environment
+scene_path = os.path.join(os.path.dirname(__file__), "../Scene/Pick_Place_Scene.usd")
+add_reference_to_stage(usd_path=scene_path, prim_path="/Environment")
+
 # Initialize the Follow Target task with a target location for the cube to be followed by the end effector
 my_task = FollowTarget(name="iisy11_follow_target", target_position=np.array([0.5, 0, 0.5]))
 my_world.add_task(my_task)
