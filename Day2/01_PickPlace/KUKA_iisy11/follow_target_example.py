@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: Copyright (c) 2022-2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) 2025 Institute for Production and Informatics, Kempten University.
 # SPDX-License-Identifier: Apache-2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,21 +12,35 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+# Based on the original script by NVIDIA Corporation, modified for educational purposes.
+
+import os
+try:
+    import omni.kit.app
+    try:
+        app = omni.kit.app.get_app()
+        if app is not None:
+            print("Detected SimulatorApp instance. Exiting application script.\n(Do not run script from within App)")
+            exit(1)
+    except RuntimeError:
+        # This happens if the Kit app is not running (e.g., in python.sh)
+        pass
+except ImportError:
+    print("omni.isaac.kit not found. No Omniverse-related libraries available.\n(Ensure you are running this script in the correct environment.)")
+    exit(1)
 
 from isaacsim import SimulationApp
 
 simulation_app = SimulationApp({"headless": False})
 
-import argparse
-
 import numpy as np
-from controllers.rmpflow import RMPFlowController
+from controllers.ik_solver import KinematicsSolver
 from isaacsim.core.api import World
 from tasks.follow_target import FollowTarget
 
-parser = argparse.ArgumentParser()
-parser.add_argument("--test", default=False, action="store_true", help="Run in test mode")
-args, unknown = parser.parse_known_args()
+#parser = argparse.ArgumentParser()
+#parser.add_argument("--test", default=False, action="store_true", help="Run in test mode")
+#args, unknown = parser.parse_known_args()
 
 my_world = World(stage_units_in_meters=1.0)
 # Initialize the Follow Target task with a target location for the cube to be followed by the end effector
@@ -38,12 +52,8 @@ target_name = task_params["target_name"]["value"]
 iisy11_name = task_params["robot_name"]["value"]
 my_iisy11 = my_world.scene.get_object(iisy11_name)
 
-# initialize the controller
-my_controller = RMPFlowController(name="target_follower_controller", robot_articulation=my_iisy11)
-
-# make RmpFlow aware of the ground plane
-ground_plane = my_world.scene.get_object(name="default_ground_plane")
-my_controller.add_obstacle(ground_plane)
+# initialize the ik solver
+ik_solver = KinematicsSolver(my_iisy11)
 
 articulation_controller = my_iisy11.get_articulation_controller()
 reset_needed = False
@@ -52,15 +62,16 @@ while simulation_app.is_running():
     if my_world.is_stopped() and not reset_needed:
         reset_needed = True
     if my_world.is_playing():
-        if reset_needed:
+        if my_world.current_time_step_index == 0:
             my_world.reset()
-            reset_needed = False
+
         observations = my_world.get_observations()
-        actions = my_controller.forward(
-            target_end_effector_position=observations[target_name]["position"],
-            target_end_effector_orientation=observations[target_name]["orientation"],
+        actions, succ = ik_solver.compute_inverse_kinematics(
+            target_position=observations[target_name]["position"],
+            target_orientation=observations[target_name]["orientation"],
         )
-        articulation_controller.apply_action(actions)
-    if args.test is True:
-        break
+        if succ:
+            articulation_controller.apply_action(actions)
+        else:
+            print("IK did not converge to a solution.  No action is being taken.")
 simulation_app.close()

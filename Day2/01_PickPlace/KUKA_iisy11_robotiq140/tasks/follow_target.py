@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: Copyright (c) 2022-2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) 2025 Institute for Production and Informatics, Kempten University.
 # SPDX-License-Identifier: Apache-2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,6 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+# Based on the original script by NVIDIA Corporation, modified for educational purposes.
 
 import os
 from typing import Optional
@@ -19,7 +20,9 @@ from typing import Optional
 import isaacsim.core.api.tasks as tasks
 import numpy as np
 from isaacsim.core.utils.stage import add_reference_to_stage
-from single_manipulator_fixed import SingleManipulatorFixed as SingleManipulator
+from isaacsim.robot.manipulators import SingleManipulator
+from isaacsim.robot.manipulators.grippers import ParallelGripper
+from isaacsim.storage.native import get_assets_root_path
 
 
 # Inheriting from the base class Follow Target
@@ -45,11 +48,21 @@ class FollowTarget(tasks.FollowTarget):
         return
 
     def set_robot(self) -> SingleManipulator:
-        asset_path = os.path.join(os.path.dirname(__file__), "../iisy11_1300.usd")
+        asset_path = os.path.join(os.path.dirname(__file__), "../iisy11_1300_Robotiq_2f_140.usd")
         add_reference_to_stage(usd_path=asset_path, prim_path="/lbr_iisy11_r1300")
+        # Adjusted for isaac sim 4.5 compatibility and stable pick and place        
+        gripper = ParallelGripper(
+            end_effector_prim_path="/lbr_iisy11_r1300/ee_link/robotiq_arg2f_base_link",
+            joint_prim_names=["finger_joint", "right_outer_knuckle_joint"],
+            joint_opened_positions=np.array([0,-0.84]),
+            joint_closed_positions=np.array([0.8,-0.2]),
+            action_deltas=np.array([-0.6,0.2]),
+            #use_mimic_joints=True,
+        )
         manipulator = SingleManipulator(
             prim_path="/lbr_iisy11_r1300",
             name="lbr_iisy11_r1300",
-            end_effector_prim_path="/lbr_iisy11_r1300/link_6/tool0",
+            end_effector_prim_path="/lbr_iisy11_r1300/ee_link/robotiq_arg2f_base_link",
+            gripper=gripper,
         )
         return manipulator

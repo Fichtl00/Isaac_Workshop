@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: Copyright (c) 2022-2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) 2025 Institute for Production and Informatics, Kempten University.
 # SPDX-License-Identifier: Apache-2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,6 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+# Based on the original script by NVIDIA Corporation, modified for educational purposes.
 
 import os
 from typing import Optional
@@ -25,9 +26,9 @@ class KinematicsSolver(ArticulationKinematicsSolver):
         # TODO: change the config path
         self._kinematics = LulaKinematicsSolver(
             robot_description_path=os.path.join(os.path.dirname(__file__), "../rmpflow/robot_descriptor.yaml"),
-            urdf_path=os.path.join(os.path.dirname(__file__), "../rmpflow/lbr_iisy11_1300_robotiq_140.urdf"),
+            urdf_path=os.path.join(os.path.dirname(__file__), "../rmpflow/lbr_iisy11_1300.urdf"),
         )
         if end_effector_frame_name is None:
-            end_effector_frame_name = "gripper_center"
+            end_effector_frame_name = "link_6"
         ArticulationKinematicsSolver.__init__(self, robot_articulation, self._kinematics, end_effector_frame_name)
         return
