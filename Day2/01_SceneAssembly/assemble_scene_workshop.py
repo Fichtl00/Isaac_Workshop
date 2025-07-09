@@ -109,31 +109,6 @@ remove_scale_unitsresolve_ops("/World/Robot_assembly/Gripper")
 stage.GetRootLayer().Save()
 print("Alle xformOp:scale:unitsResolve-Operationen entfernt und Szene geladen!")
 
-# 6. ASSEMBLY: Roboter und Greifer verbinden (Isaac Sim RobotAssembler)
-try:
-    from isaacsim.robot_setup.assembler import RobotAssembler
-    import numpy as np
+# 6. ASSEMBLY: Robot and Gripper assembly from (Isaac Sim RobotAssembler)
+    #in the second script to be executed.
 
-    # Pfade und Mount-Frames anpassen!
-    base_robot_path = ROBOT_PRIM_PATH
-    attach_robot_path = GRIPPER_PRIM_PATH
-    base_robot_mount_frame = "/link_6"              # <- Name des Mount-Frames im Roboter
-    attach_robot_mount_frame = "/robotiq_base_link"  # <- Name des Mount-Frames im Greifer
-    fixed_joint_offset = np.array([0.0, 0.0, -0.178])   # <- ggf. anpassen!
-    fixed_joint_orient = np.array([0.0, 1.0, 0.0, 0.0]) # <- ggf. anpassen!
-
-    robot_assembler = RobotAssembler()
-    assembled_robot = robot_assembler.assemble_articulations(
-        base_robot_path,
-        attach_robot_path,
-        base_robot_mount_frame,
-        attach_robot_mount_frame,
-        fixed_joint_offset,
-        fixed_joint_orient,
-        mask_all_collisions=True,
-        single_robot=True
-    )
-    print("Roboter und Greifer wurden zusammengesetzt!")
-except Exception as e:
-    print("Assembly konnte nicht durchgeführt werden. Ist Isaac Sim installiert und der RobotAssembler verfügbar?")
-    print(e)
