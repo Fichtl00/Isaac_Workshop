@@ -3,7 +3,7 @@ import omni.usd as usd
 
 from isaacsim.robot_setup.assembler import AssembledRobot, RobotAssembler
 
-base_robot_path = "/World/Robot_assembly/Robot/iisy_15_ros2"
+base_robot_path = "/World/Robot_assembly/Robot/iisy_15"
 attach_robot_path = "/World/Robot_assembly/Gripper/Robotiq_2F_140"
 base_robot_mount_frame = "/link_6"
 attach_robot_mount_frame = "/robotiq_arg2f_base_link"
@@ -29,4 +29,4 @@ assembled_robot = robot_assembler.assemble_articulations(
     single_robot=single_robot
 )
 
-print("Roboter und Greifer wurden assembliert!")
+print("Robot and Gripper assembled")
