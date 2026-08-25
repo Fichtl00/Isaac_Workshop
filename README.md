@@ -1,4 +1,4 @@
-⚠️ **Work in Progress:** This workshop material is under active development and may change frequently.
+⚠️ **Work in Progress:** This workshop material is partially deprecated and may aspects may have changed (e.g. availability of Storage API).
 
 # Isaac Workshop
 
